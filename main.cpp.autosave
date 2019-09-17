@@ -1,4 +1,4 @@
-#include <string>
+/*#include <string>
 #include <iostream>
 #include <sstream>
 //#include <Windows.h>
@@ -73,4 +73,27 @@ cout << a3() <<endl;
 
    }
 
+}
+*/
+
+#include <time.h>
+#include <stdio.h>
+#include <mysql.h>
+
+int main ()  {
+    MYSQL_RES *mTabelle;
+    MYSQL_ROW mRecord;
+    MYSQL *mConnection, mDB;
+    int mError;
+    mysql_init(&mDB);
+    mConnection =
+mysql_real_connect(&mDB,"localhost","root","","test",0,0,0);
+    if (mConnection == NULL)  {
+        printf("Es konnte keine Verbindung zur Datenbank hergestellt werden: %s",mysql_error(&mDB));
+        return 1;
+    } else {
+ printf("Es wurde erfolgreich eine Verbindung hergestellt!");
+    }
+    mysql_close(mConnection);
+    return 0;
 }
