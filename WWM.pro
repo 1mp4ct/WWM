@@ -28,13 +28,16 @@ SOURCES += \
         mainwindow.cpp \
     questionview.cpp \
     startview.cpp \
-    controller.cpp
+    controller.cpp \
+    blka.cpp
 
 HEADERS += \
         mainwindow.h \
     questionview.h \
     startview.h \
-    controller.h
+    controller.h \
+    blka.h \
+    frage.h
 
 FORMS += \
         mainwindow.ui \

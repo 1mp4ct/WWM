@@ -1,25 +1,50 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <QWidget>
 #include <QObject>
 #include <QApplication>
+#include "ui_startview.h"
+#include "ui_questionview.h"
+#include "frage.h"
+#include <string>
+#include <QTimer>
 
 class Controller : public QObject
 {
     Q_OBJECT
-
 public:
-    Controller(QApplication *app);
-    void startGame();
-public slots:
-    void onStartButtonClicked();
+    explicit Controller(QObject *parent = nullptr, QApplication *appl = nullptr);
+    //Controller(QApplication *appl);
+    void startGame(QList<frage> *questions);
+    void setCurrentQuest(frage quest);
+    QString waitForAnswer();
 
+private slots:
+    void exit();
+    void goToQuestion();
+    void onAnsA();
+    void onAnsB();
+    void onAnsC();
+    void onAnsD();
 private:
+    void evalQuest(QString answer);
+    void addMoney();
+    void updateMoney();
+
+    QWidget *startViewWidget;
+    QWidget *questViewWidget;
+
+    Ui::StartView start_ui;
+    Ui::QuestionView quest_ui;
+
     QApplication *app;
-    StartView *startView;
-    QuestionView *questView;
+    QString currAnswer;
+    QTimer timer;
+    QList<frage> *quests;
 
-
+    int currentQuest;
+    int money;
 };
 
 #endif // CONTROLLER_H

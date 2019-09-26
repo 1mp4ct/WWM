@@ -1,6 +1,5 @@
 #include "startview.h"
 #include "ui_startview.h"
-#include "controller.h"
 
 StartView::StartView(QWidget *parent) :
     QWidget(parent),
@@ -18,7 +17,7 @@ StartView::~StartView()
 
 void StartView::setController(Controller *c) {
     m_c = c;
-    connect(ui->exitButton, SIGNAL(clicked()), m_c, SLOT(onStartButtonClicked()));
+    connect(ui->exitButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
 }
 
 

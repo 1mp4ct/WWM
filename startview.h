@@ -4,7 +4,9 @@
 #include <QWidget>
 #include "controller.h"
 
+class Controller;
 namespace Ui {
+
 class StartView;
 }
 
