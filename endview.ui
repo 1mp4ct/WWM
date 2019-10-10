@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>751</width>
-    <height>515</height>
+    <width>800</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="newGameButton">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>140</x>
      <y>380</y>
      <width>111</width>
      <height>41</height>
@@ -29,7 +29,7 @@
   <widget class="QPushButton" name="startButton">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>340</x>
      <y>320</y>
      <width>111</width>
      <height>41</height>
@@ -52,17 +52,20 @@
     <string>Beenden</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="endText">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <widget class="QLabel" name="endText">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>130</y>
-     <width>441</width>
-     <height>71</height>
+     <x>216</x>
+     <y>20</y>
+     <width>361</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

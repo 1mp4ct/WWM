@@ -14,7 +14,7 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
 
 
        questViewWidget = new QWidget;
-       questViewWidget->setStyleSheet("QWidget{background-image: url(:/assets/wwmfragen.png); color: white; border: none;} QTextEdit, QPushButton{background: transparent;}");
+       questViewWidget->setStyleSheet("QWidget{background-image: url(:/assets/wwmfragen.png); color: white; border: none;} QPushButton{background: transparent; font-size: 14px; Text-align:left;} QPushButton:hover{background: transparent; color: yellow;} QTextEdit{background: transparent; font-size: 14px;} ");
        quest_ui.setupUi(questViewWidget);
        updateMoney();
        connect(quest_ui.AnswerA, SIGNAL(clicked()), this, SLOT(onAnsA()));
@@ -24,6 +24,7 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
        //connect(quest_ui.startButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
 
        endViewWidget = new QWidget;
+       endViewWidget->setStyleSheet("QWidget{background-image: url(:/assets/logo2.png); color: white;} QLabel{background: transparent; font-size: 16px; font-weight: bold; border: none;}");
 
        end_ui.setupUi(endViewWidget);
 
@@ -103,13 +104,19 @@ QString Controller::waitForAnswer() {
 }
 
 void Controller::evalQuest(QString answer) {
+    if (currentQuest >= 15) {
+        goToEnd();
+    }
     if (answer == quests->at(currentQuest).ar) {
         setCurrentQuest(quests->at(++currentQuest));
         addMoney();
         updateMoney();
+
     } else {
         if (currentQuest < 11) {
             money = 0;
+        } else if (currentQuest < 16){
+            money = 16000;
         }
         goToEnd();
     }
