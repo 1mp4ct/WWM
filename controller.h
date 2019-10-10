@@ -6,6 +6,7 @@
 #include <QApplication>
 #include "ui_startview.h"
 #include "ui_questionview.h"
+#include "ui_endview.h"
 #include "frage.h"
 #include <string>
 #include <QTimer>
@@ -23,6 +24,8 @@ public:
 private slots:
     void exit();
     void goToQuestion();
+    void goToStart();
+    void goToEnd();
     void onAnsA();
     void onAnsB();
     void onAnsC();
@@ -34,9 +37,11 @@ private:
 
     QWidget *startViewWidget;
     QWidget *questViewWidget;
+    QWidget *endViewWidget;
 
     Ui::StartView start_ui;
     Ui::QuestionView quest_ui;
+    Ui::endview end_ui;
 
     QApplication *app;
     QString currAnswer;

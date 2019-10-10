@@ -5,13 +5,16 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
        currentQuest = 0;
        money = 0;
        startViewWidget = new QWidget;
+       startViewWidget->setStyleSheet("background-image: url(:/assets/logo2.png); color: white;");
        //Ui::StartView start_ui;
        start_ui.setupUi(startViewWidget);
        connect(start_ui.exitButton, SIGNAL(clicked()), this, SLOT(exit()));
        connect(start_ui.startButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
 
+
+
        questViewWidget = new QWidget;
-      // Ui::QuestionView quest_ui;
+       questViewWidget->setStyleSheet("QWidget{background-image: url(:/assets/wwmfragen.png); color: white; border: none;} QTextEdit, QPushButton{background: transparent;}");
        quest_ui.setupUi(questViewWidget);
        updateMoney();
        connect(quest_ui.AnswerA, SIGNAL(clicked()), this, SLOT(onAnsA()));
@@ -20,6 +23,13 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
        connect(quest_ui.AnswerD, SIGNAL(clicked()), this, SLOT(onAnsD()));
        //connect(quest_ui.startButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
 
+       endViewWidget = new QWidget;
+
+       end_ui.setupUi(endViewWidget);
+
+       connect(end_ui.exitButton, SIGNAL(clicked()), this, SLOT(exit()));
+       connect(end_ui.startButton, SIGNAL(clicked()), this, SLOT(goToStart()));
+       connect(end_ui.newGameButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
 }
 
 void Controller::startGame(QList<frage> *questions) {
@@ -33,9 +43,28 @@ void Controller::exit() {
 }
 
 void Controller::goToQuestion() {
-    startViewWidget->hide();
+    money = 0;
+    currentQuest = 0;
     setCurrentQuest(quests->at(currentQuest));
+    updateMoney();
+
+    startViewWidget->hide();
+    endViewWidget->hide();
     questViewWidget->show();
+}
+
+void Controller::goToStart() {
+    startViewWidget->show();
+    endViewWidget->hide();
+    questViewWidget->hide();
+}
+
+void Controller::goToEnd() {
+    end_ui.endText->setText("Spiel vorbei, Gewinn: " + QString::number(money));
+
+    startViewWidget->hide();
+    endViewWidget->show();
+    questViewWidget->hide();
 }
 
 void Controller::setCurrentQuest(frage quest) {
@@ -79,7 +108,10 @@ void Controller::evalQuest(QString answer) {
         addMoney();
         updateMoney();
     } else {
-        app->exit();
+        if (currentQuest < 11) {
+            money = 0;
+        }
+        goToEnd();
     }
 }
 
