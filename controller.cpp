@@ -104,16 +104,19 @@ QString Controller::waitForAnswer() {
 }
 
 void Controller::evalQuest(QString answer) {
-    if (currentQuest >= 15) {
-        goToEnd();
-    }
+
     if (answer == quests->at(currentQuest).ar) {
-        setCurrentQuest(quests->at(++currentQuest));
         addMoney();
         updateMoney();
 
+        if (currentQuest < 14)  {
+            setCurrentQuest(quests->at(++currentQuest));
+        } else {
+            goToEnd();
+        }
+
     } else {
-        if (currentQuest < 11) {
+        if (currentQuest < 9) {
             money = 0;
         } else if (currentQuest < 16){
             money = 16000;
@@ -123,7 +126,7 @@ void Controller::evalQuest(QString answer) {
 }
 
 void Controller::addMoney() {
-    switch(currentQuest + 1) {
+    switch(currentQuest + 2) {
         case 2: money = 50; break;
         case 3: money = 100; break;
         case 4: money = 200; break;
