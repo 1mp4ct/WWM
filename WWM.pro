@@ -32,7 +32,8 @@ SOURCES += \
     startview.cpp \
     controller.cpp \
     blka.cpp \
-    endview.cpp
+    endview.cpp \
+    joker.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     controller.h \
     blka.h \
     frage.h \
-    endview.h
+    endview.h \
+    joker.h
 
 FORMS += \
         mainwindow.ui \

@@ -14,7 +14,7 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
 
 
        questViewWidget = new QWidget;
-       questViewWidget->setStyleSheet("QWidget{background-image: url(:/assets/wwmfragen.png); color: white; border: none;} QPushButton{background: transparent; font-size: 14px; Text-align:left;} QPushButton:hover{background: transparent; color: yellow;} QTextEdit{background: transparent; font-size: 14px;} ");
+       questViewWidget->setStyleSheet("QWidget{background-image: url(:/assets/wwmfragen.png); color: white; border: none;} QPushButton{background: transparent; font-size: 14px; Text-align:left;} QPushButton:hover{background: transparent; color: yellow;} QTextEdit{background: transparent; font-size: 14px;} QPushButton#PhoneJoker, QPushButton#AudJoker, QPushButton#Joker50 {background: transparent; border: 1px solid blue;} QPushButton#Joker50:disabled, QPushButton#AudJoker:disabled, QPushButton#PhoneJoker:disabled {color: #444444; border-color: #444444}");
        quest_ui.setupUi(questViewWidget);
        updateMoney();
        connect(quest_ui.AnswerA, SIGNAL(clicked()), this, SLOT(onAnsA()));
@@ -22,6 +22,10 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
        connect(quest_ui.AnswerC, SIGNAL(clicked()), this, SLOT(onAnsC()));
        connect(quest_ui.AnswerD, SIGNAL(clicked()), this, SLOT(onAnsD()));
        //connect(quest_ui.startButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
+
+       connect(quest_ui.Joker50, SIGNAL(clicked()), this, SLOT(onJoker50()));
+       connect(quest_ui.AudJoker, SIGNAL(clicked()), this, SLOT(onAudJoker()));
+       connect(quest_ui.PhoneJoker, SIGNAL(clicked()), this, SLOT(onPhoneJoker()));
 
        endViewWidget = new QWidget;
        endViewWidget->setStyleSheet("QWidget{background-image: url(:/assets/logo2.png); color: white;} QLabel{background: transparent; font-size: 16px; font-weight: bold; border: none;}");
@@ -42,6 +46,14 @@ void Controller::startGame(QList<frage> *questions) {
 void Controller::exit() {
     app->exit();
 }
+
+/*
+void Controller::disableAnswer(String s) {
+    switch (s) {
+        case "a":
+
+    }
+}*/
 
 void Controller::goToQuestion() {
     money = 0;
@@ -70,12 +82,29 @@ void Controller::goToEnd() {
 
 void Controller::setCurrentQuest(frage quest) {
        currAnswer = nullptr;
+
+       removeJoker();
+
      quest_ui.Question->setText(quest.qw);
      quest_ui.AnswerA->setText(quest.an1);
      quest_ui.AnswerB->setText(quest.an2);
      quest_ui.AnswerC->setText(quest.an3);
      quest_ui.AnswerD->setText(quest.an4);
 
+}
+
+void Controller::setJoker(Joker* joker) {
+    quest_ui.jokerFieldA->setText(QString(std::to_string(joker->a*100.0).c_str()));
+    quest_ui.jokerFieldB->setText(QString(std::to_string(joker->b*100.0).c_str()));
+    quest_ui.jokerFieldC->setText(QString(std::to_string(joker->c*100.0).c_str()));
+    quest_ui.jokerFieldD->setText(QString(std::to_string(joker->d*100.0).c_str()));
+}
+
+void Controller::removeJoker() {
+    quest_ui.jokerFieldA->setText("");
+    quest_ui.jokerFieldB->setText("");
+    quest_ui.jokerFieldC->setText("");
+    quest_ui.jokerFieldD->setText("");
 }
 
 void Controller::onAnsA() {
@@ -147,5 +176,26 @@ void Controller::addMoney() {
 
 void Controller::updateMoney() {
     quest_ui.moneyField->setText("Gewinn: " + QString::number(money));
+}
+
+void Controller::onJoker50() {
+    quest_ui.Joker50->setEnabled(false);
+    FiftyFiftyJoker* j = new FiftyFiftyJoker();
+    j->evalQuest(quests->at(currentQuest));
+    setJoker(j);
+}
+
+void Controller::onAudJoker() {
+    quest_ui.AudJoker->setEnabled(false);
+    AudJoker* j = new AudJoker();
+    j->evalQuest(quests->at(currentQuest));
+    setJoker(j);
+}
+
+void Controller::onPhoneJoker() {
+    quest_ui.PhoneJoker->setEnabled(false);
+    PhoneJoker* j = new PhoneJoker();
+    j->evalQuest(quests->at(currentQuest));
+    setJoker(j);
 }
 

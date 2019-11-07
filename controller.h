@@ -8,6 +8,7 @@
 #include "ui_questionview.h"
 #include "ui_endview.h"
 #include "frage.h"
+#include "joker.h"
 #include <string>
 #include <QTimer>
 
@@ -30,10 +31,15 @@ private slots:
     void onAnsB();
     void onAnsC();
     void onAnsD();
+    void onJoker50();
+    void onAudJoker();
+    void onPhoneJoker();
 private:
+    void removeJoker();
     void evalQuest(QString answer);
     void addMoney();
     void updateMoney();
+    void setJoker(Joker* joker);
 
     QWidget *startViewWidget;
     QWidget *questViewWidget;
