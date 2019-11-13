@@ -11,6 +11,8 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
        connect(start_ui.exitButton, SIGNAL(clicked()), this, SLOT(exit()));
        connect(start_ui.startButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
 
+       startViewWidget->setWindowFlags(Qt::Widget | Qt::MSWindowsFixedSizeDialogHint);
+
 
 
        questViewWidget = new QWidget;
@@ -22,6 +24,8 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
        connect(quest_ui.AnswerC, SIGNAL(clicked()), this, SLOT(onAnsC()));
        connect(quest_ui.AnswerD, SIGNAL(clicked()), this, SLOT(onAnsD()));
        //connect(quest_ui.startButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
+
+       questViewWidget->setWindowFlags(Qt::Widget | Qt::MSWindowsFixedSizeDialogHint);
 
        connect(quest_ui.Joker50, SIGNAL(clicked()), this, SLOT(onJoker50()));
        connect(quest_ui.AudJoker, SIGNAL(clicked()), this, SLOT(onAudJoker()));
@@ -35,6 +39,8 @@ Controller::Controller(QObject *parent, QApplication *appl) : QObject(parent) {
        connect(end_ui.exitButton, SIGNAL(clicked()), this, SLOT(exit()));
        connect(end_ui.startButton, SIGNAL(clicked()), this, SLOT(goToStart()));
        connect(end_ui.newGameButton, SIGNAL(clicked()), this, SLOT(goToQuestion()));
+
+       endViewWidget->setWindowFlags(Qt::Widget | Qt::MSWindowsFixedSizeDialogHint);
 }
 
 void Controller::startGame(QList<frage> *questions) {
@@ -60,6 +66,10 @@ void Controller::goToQuestion() {
     currentQuest = 0;
     setCurrentQuest(quests->at(currentQuest));
     updateMoney();
+
+    quest_ui.AudJoker->setEnabled(true);
+    quest_ui.PhoneJoker->setEnabled(true);
+    quest_ui.Joker50->setEnabled(true);
 
     startViewWidget->hide();
     endViewWidget->hide();
